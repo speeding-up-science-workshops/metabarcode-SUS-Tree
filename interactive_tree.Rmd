@@ -25,7 +25,7 @@ library(scales)
 
 ### Read the needed data, turn it into a phyloseq object
 
-Some data munging needs to happen to get the data files we have into the form needed for phyloseq. Ignore these steps if your data is well formed.
+Some data munging needs to happen to get the data files we have into the form needed for phyloseq. Ignore these steps if your data is well formed, or if you already have a phyloseq object
 
 ```{r read_data}
 
@@ -212,23 +212,27 @@ interactive_plot_tree <- function (physeq, method = "sampledodge", nodelabf = NU
 
 ### Subset data
 
-I reduce the data just so plotting is faster. Subset or not as you want to explore your data. subset_samples also is helpful.
+I reduce the data just so the plot is smaller and prettier. Subset or not as you want to explore your data. subset_taxa also is helpful.
 
 ```{r subset}
 
-#ps_small <- subset_taxa(ps, Order=='o__Rickettsiales')
+list_to_keep <- as.logical( c(rep(c(1,0,0,0,0), 27), 0, 1, 0, 0))
 
-ps_small <- ps
+ps_small <- prune_samples(list_to_keep, ps)
+
+#ps_small <- subset_taxa(ps, Order=='Oceanospirillales')
 
 ```
 
 ### Make reporting taxa
 
+This is a holdover from when I was working with more incomplete data. I leave it here because it does no harm, and illustrated some of what you might do. Going forward I will be using Genus. 
 Here I change the taxa table so that there is a column called lowest_taxa. This is the taxonomic classification of the leaf with the lowest known name. NA's are removed, as are entries such as f__. 
 
 ```{r report}
 
 # Collapse into single column
+# This data has no Species column. If yours does, the index should be 1:7
 Lowest_taxa <- do.call(paste, c(as.data.frame(tax_table(ps_small))[1:6], sep=";"))
 
 Lowest_taxa <- gsub("(;NA)*$", "", Lowest_taxa, perl=T)    # Remove NAs
@@ -248,15 +252,17 @@ This is not necessary, you can use "Family", or whatever taxonomic level you lik
 
 ```{r draw_tree}
 
-pt <- interactive_plot_tree(ps_small, ladderize="left", color="Depth", size='abundance', nodelabf=nodeplotblank, base.spacing=0.1, tooltip = 'Lowest_taxa')
+pt <- interactive_plot_tree(ps_small, ladderize="left", color="Depth", size='abundance', nodelabf=nodeplotblank, base.spacing=0.1, tooltip = 'Genus')
   
-plotly_tree<-ggplotly(p=pt, tooltip = 'Lowest_taxa') 
+plotly_tree<-ggplotly(p=pt, tooltip = 'Genus') 
 
 plotly_tree
 
 ```
 
 This draws the tree. The dots are the different samples we have, colored by sample type. The size of the dot is a measure of abundance. Unfortunately, plotly overwrites color choices, and removes the abundance scale. I will update if I figure out how to fix this.
+
+More information on how to tweek the tree graph can be found [here](https://joey711.github.io/phyloseq/plot_tree-examples.html)
 
 You can save as an html using the below.
 
