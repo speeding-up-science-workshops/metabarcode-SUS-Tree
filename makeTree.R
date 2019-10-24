@@ -23,7 +23,21 @@ taxa <- read_csv('Data_Files/taxa.csv')
 ncbi <- read_csv('Data_Files/OM.CompanionTables.csv')
 names(ncbi)[1] <- 'NCBI_ID'
 
+
+ncbi$pasted <- do.call(paste, c(as.data.frame(ncbi[2:8], sep=";")))
+
+ncbi <- ncbi[!duplicated(ncbi$pasted),]
+ncbi$pasted <- NULL
+
+
+
+head(ncbi)
+# 
+
+
+
 # Merge tables together
+
 d <- merge(ncbi, taxa)
 d <- as_tibble(d)
 
@@ -43,7 +57,6 @@ tax_tree <- class2tree(tax_class, check = TRUE)
 
 # Test that that all worked
 plot(tax_tree)
-
 
 
 # I just want the tree part
