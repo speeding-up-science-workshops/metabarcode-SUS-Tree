@@ -228,7 +228,7 @@ ps_small <- prune_samples(list_to_keep, ps)
 
 This is a holdover from when I was working with more incomplete data. I leave it here because it does no harm, and illustrated some of what you might do. Going forward I will be using Genus. 
 Here I change the taxa table so that there is a column called lowest_taxa. This is the taxonomic classification of the leaf with the lowest known name. NA's are removed, as are entries such as f__. 
-
+ 
 ```{r report}
 
 # Collapse into single column
