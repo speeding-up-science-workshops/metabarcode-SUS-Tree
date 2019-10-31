@@ -1,11 +1,8 @@
 # Interactive Tree
 
+[![DOI](https://zenodo.org/badge/217613901.svg)](https://zenodo.org/badge/latestdoi/217613901)
+
 ![Final visualization](tree.png)
-
-## Author
-
-Niel Infante
-(ORCID: 0000-0002-1669-8795)
 
 ## Summary
 
@@ -26,7 +23,12 @@ This R markdown file will lead you through the steps needed to import the data i
 
 The tree file was created from the taxa file. If you want to see how that was done, look at the makeTree.R script.
 
+## Author
 
-**Github Repository:** <https://github.com/NielInfante/Sus_Tree>
+Niel Infante
+(ORCID: 0000-0002-1669-8795)
+
+
+**Github Repository:** <https://github.com/speeding-up-science-workshops/metabarcode-SUS-Tree>
 
 **Open Notebook (RStudio):** [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/G-Brennan/Metabarcoding_group_UCDavis/master?urlpath=rstudio)
